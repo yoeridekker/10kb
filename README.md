@@ -2,6 +2,10 @@
 The 10kb challenge: [read the challenge page](https://a-k-apart.com/)
 
 ## The 10kb Weather App
+The Weather in 10kb will let you get the weather on your current location or any other location of your choice as fast as possible!
+Hope you guys and girls like the sleek IOS like look.
+
+## Used techniques
 The initial load of the 10kb Weather App must be under 10kb.
 The following techniques are used:
 * LocalStorage (saving the last requested weather data for a day to decrease the initial load when visited again, if the browser supports LocalStorage)
