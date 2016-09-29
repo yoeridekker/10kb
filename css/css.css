@@ -137,3 +137,12 @@ span.nav.left{
 span.nav.right{
     left: 75%;
 }
+a#copy {
+    position: fixed;
+    bottom: 5px;
+    text-align: center;
+    width: 100%;
+    font-size: 15px;
+    color: #999;
+    text-decoration: none;
+}
