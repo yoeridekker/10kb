@@ -6,20 +6,25 @@ var mn = ["Jan","Feb","Mar","Apr", "May","Jun", "Jul","Aug","Sep","Oct","Nov","D
 	lng = 5.96,
 	plc = 'The Netherlands',
 	t = new Date(),
+	data = null,
 	cityinput = document.getElementById("city"),
 	cityval = document.getElementById("city").value;
 
+
+if ( navigator && navigator.geolocation ) {
+	navigator.geolocation.getCurrentPosition(showPosition,showError);
+}else{
+	loadResults();
+}
 function weather(callback){
 	getJSONP('https://api.darksky.net/forecast/9435460ac274999f8dcd0ba124acb7dc/'+lat+','+lng+'?exclude=currently,minutely,hourly,flags,alerts&units=ca&lang=en&callback='+callback);
 }
-getLocation();
-function getLocation() {
-	if ( navigator && navigator.geolocation ) navigator.geolocation.getCurrentPosition(showPosition,showError);
-}
-function showPosition(position) {
-	lat = position.coords.latitude;
-	lng = position.coords.longitude; 
-	weather('loadResults');
+
+function showPosition(p) {
+	lat = p.coords.latitude;
+	lng = p.coords.longitude;
+	plc = 'Your location';
+	loadResults();
 }
 function showError(error) {
 	if( LS ){
@@ -44,13 +49,14 @@ function loadResults(data){
 	if( LS ) var localFile = localStorage.getItem(localkey);
 	if( LS && localFile != null ){
 		setData( JSON.parse(localFile) );
+	}else if( data != null ){
+		setData(data);
 	}else{
 		weather('setData');
 	}
 }
 function setData( data ){
 	id = 0;
-	console.log(data);
 	var localkey = t.getMonth() +'-'+ t.getDate() +'-'+ lat +'-'+ lng;
 	if( LS ){
 		localStorage.setItem(localkey, JSON.stringify(data) );
@@ -108,7 +114,8 @@ function googleSuggest(){
 		if ( !place.geometry ) return;
 		lat = place.geometry.location.lat();
 		lng = place.geometry.location.lng();
-		plc = place.formatted_address;			
+		plc = place.formatted_address;	
+		cityinput.value = plc;	
 		if( LS ) {
 			localStorage.setItem('cty',plc);
 			localStorage.setItem('lat',lat);

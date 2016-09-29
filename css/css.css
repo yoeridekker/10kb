@@ -73,6 +73,10 @@ div#result {
     margin: 0 auto;
     display: block;
 }
+div#result img{
+    display: block;
+    margin: 60px auto;
+}
 div#result div.day {
     width: 100%;
     height: 0;
